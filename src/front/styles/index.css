@@ -1,3 +1,43 @@
 /* 
-    General Styles used on every website (Don't Repeat Yourself)
+    General Styles
 */
+
+
+.link-logo {
+    text-decoration: none;
+    color: black;
+}
+
+.logo{
+    width: 4em;
+}
+
+.fav-btn,
+.fav-btn:active {
+    border: 0 !important;
+}
+
+
+.auto-search-container,
+.auto-search {
+    position: relative;
+}
+
+.dropdown-auto-search{
+    border: 1px solid black;
+    position: absolute;
+    background: white;
+    z-index: 100;
+    top: 50px;
+    left: 0;
+    right: 0;
+    /* border-radius: 4px; */
+}
+
+.my-badge {
+    box-shadow: 0 .065rem .15rem rgba(0,0,0,.8)!important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
