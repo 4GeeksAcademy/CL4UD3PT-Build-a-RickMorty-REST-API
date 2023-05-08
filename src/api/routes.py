@@ -61,7 +61,8 @@ def get_one_character(character_id):
             jsonify({"Error": "Not able to find character with the provided id."}),
             400,
         )
-    return jsonify({"Character": character.serialize()}), 200
+    print(character.serialize())
+    return jsonify(character.serialize()), 200
 
 
 @api.route("/character", methods=["POST"])

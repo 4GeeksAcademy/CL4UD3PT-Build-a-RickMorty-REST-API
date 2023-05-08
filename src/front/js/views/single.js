@@ -12,10 +12,15 @@ export const Single = () => {
 		getSingleData();
 	}, [])
 
+	useEffect(()=>{
+		console.log("New item is: ", item);
+	}, [item])
+
 	const getSingleData = async () => {
-		const response = await fetch("https://rickandmortyapi.com/api/" + params.thetype + "/" + params.theid);
+		const response = await fetch(store.APIUrl + params.thetype + "/" + params.theid);
 		const data = await response.json();
 		setItem(data);
+		console.log(data)
 	}
 	return (
 		<div className="container pb-5">

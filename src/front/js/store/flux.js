@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			character: [],
 			location: [],
 			episode: [],
-			APIUrl: 'https://cl4ud3pt-fluffy-adventure-7jr6x76qrj52q7g-3001.preview.app.github.dev/api/character',
+			APIUrl: 'https://cl4ud3pt-fluffy-adventure-7jr6x76qrj52q7g-3001.preview.app.github.dev/api/',
 			// nextCharacterUrl: 'https://rickandmortyapi.com/api/character',
 			nextLocationUrl: 'https://rickandmortyapi.com/api/location',
 			nextEpisodeUrl: 'https://rickandmortyapi.com/api/episode',
@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		actions: {
 			getAllCharacter: async () => {
 				if (!localStorage.getItem('character')) {
-					const response = await fetch(getStore().APIUrl);
+					const response = await fetch(getStore().APIUrl + "character");
 					const data = await response.json();
 					const newData = [...getStore().character, ...data]
 					localStorage.setItem('character', JSON.stringify(newData));
