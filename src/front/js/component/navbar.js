@@ -38,9 +38,36 @@ export const Navbar = () => {
 					{/* MENU */}
 					{!location.pathname.includes('single')
 						?<ul className="nav col-12 h-100 col-lg-auto me-lg-auto mb-2 justify-content-center mb-lg-0">
-							<li><span className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold ${store.schema === "character" ? "link-dark border-bottom" : "link-secondary"}`} onClick={() => {actions.setDataFiltered(store.character); actions.setSchema('character')}}>Characters</span></li>
-							<li><span className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold ${store.schema === "location" ? "link-dark border-bottom" : "link-secondary"}`} onClick={() => {actions.setDataFiltered(store.location); actions.setSchema('location')}}>Locations</span></li>
-							<li><span className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold ${store.schema === "episode" ? "link-dark border-bottom" : "link-secondary"}`} onClick={() => {actions.setDataFiltered(store.episode); actions.setSchema('episode')}}>Episodes</span></li>
+							<li>
+								<span 
+									className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold
+									${store.schema === "character" ? "link-dark border-bottom" : "link-secondary"}`}
+									onClick={() => {
+										actions.setDataFiltered(store.character);
+										actions.setSchema('character')
+									}}>Characters
+								</span>
+							</li>
+							<li>
+								<span
+									className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold
+									${store.schema === "location" ? "link-dark border-bottom" : "link-secondary"}`}
+									onClick={() => {
+										actions.setDataFiltered(store.location);
+										actions.setSchema('location')
+									}}>Locations
+								</span>
+							</li>
+							<li>
+								<span
+									className={`cursor-pointer nav-link pb-0 px-2 border-primary fw-bold
+									${store.schema === "episode" ? "link-dark border-bottom" : "link-secondary"}`}
+									onClick={() => {
+										actions.setDataFiltered(store.episode);
+										actions.setSchema('episode')
+									}}>Episodes
+								</span>
+							</li>
 						</ul>
 						:null
 					}

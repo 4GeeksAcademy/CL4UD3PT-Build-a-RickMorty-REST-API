@@ -38,10 +38,13 @@ export const Card = ({data}) => {
 
                 {/* Buttons */}
                 <div className="card-footer d-flex justify-content-between align-items-center">
+                    {/* FAV BUTTON */}
                     <button className={`btn fav-btn fs-4 ${store.favorites.includes(data.name)?"text-danger" : "text-secondary"}`}
                         onClick={()=>{actions.setFavorites(data.name);}}>
                         <i className={`${store.favorites.includes(data.name) ? "fa-solid" : "fa-regular"} fa-heart`}></i>
                     </button>
+                    
+                    {/* SHOW MORE BUTTON */}
                     <Link to={"/single/" + store.schema + "/" + data.id}>
                         <button className="btn btn-primary btn-sm py-1">Show info</button>
                     </Link>

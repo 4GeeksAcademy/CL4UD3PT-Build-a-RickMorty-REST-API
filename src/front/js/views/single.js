@@ -17,7 +17,7 @@ export const Single = () => {
 	}, [item])
 
 	const getSingleData = async () => {
-		const response = await fetch(store.APIUrl + params.thetype + "/" + params.theid);
+		const response = await fetch(process.env.BACKEND_URL + "api/" + params.thetype + "/" + params.theid);
 		const data = await response.json();
 		setItem(data);
 		console.log(data)
