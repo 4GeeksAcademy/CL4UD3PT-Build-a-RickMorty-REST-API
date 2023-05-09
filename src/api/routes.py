@@ -50,7 +50,7 @@ def create_new_user():
 def get_all_characters():
     characters = Character.query.all()
     characters_serialized = [character.serialize() for character in characters]
-    return jsonify(characters_serialized), 200
+    return jsonify({"characters": characters_serialized}), 200
 
 
 @api.route("/character/<int:character_id>", methods=["GET"])
@@ -87,7 +87,7 @@ def create_new_character():
 def get_all_locations():
     locations = Location.query.all()
     locations_serialized = [location.serialize() for location in locations]
-    return jsonify(locations_serialized), 200
+    return jsonify({"locations": locations_serialized}), 200
 
 
 @api.route("/location/<int:location_id>", methods=["GET"])
@@ -119,7 +119,7 @@ def create_new_location():
 def get_all_episodes():
     episodes = Episode.query.all()
     episodes_serialized = [epidode.serialize() for epidode in episodes]
-    return jsonify(episodes_serialized), 200
+    return jsonify({"episodes": episodes_serialized}), 200
 
 
 @api.route("/episode/<int:episode_id>", methods=["GET"])

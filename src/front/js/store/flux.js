@@ -4,55 +4,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 			character: [],
 			location: [],
 			episode: [],
-			APIUrl: 'https://cl4ud3pt-fluffy-adventure-7jr6x76qrj52q7g-3001.preview.app.github.dev/api/',
-			// nextCharacterUrl: 'https://rickandmortyapi.com/api/character',
-			nextLocationUrl: 'https://rickandmortyapi.com/api/location',
-			nextEpisodeUrl: 'https://rickandmortyapi.com/api/episode',
+			APIUrl: process.env.BACKEND_URL,
 			favorites: [],
 			dataFiltered: [],
 			schema: ''
 		},
 		actions: {
+			getAllData: async (dataType, requestReturnedKey) => {
+				if (localStorage.getItem(dataType)) return setStore({ character: JSON.parse(localStorage.getItem(dataType)) });
+
+				const response = await fetch(process.env.BACKEND_URL + "api/" + dataType);
+				const data = await response.json();
+			
+				if(!data[requestReturnedKey].length > 0) return console.warn(`Error in retrieved ${dataType} data!`);
+
+				localStorage.setItem(dataType, JSON.stringify(data[requestReturnedKey]));
+				setStore({[dataType]: JSON.parse(localStorage.getItem(dataType))});
+			},
 			getAllCharacter: async () => {
-				if (!localStorage.getItem('character')) {
-					const response = await fetch(getStore().APIUrl + "character");
-					const data = await response.json();
-					const newData = [...getStore().character, ...data]
-					localStorage.setItem('character', JSON.stringify(newData));
-					setStore({character: JSON.parse(localStorage.getItem('character'))});
-					// setStore({character: JSON.parse(localStorage.getItem('character')), nextCharacterUrl: data.info.next});
-				} else {	
-					setStore({
-						character: JSON.parse(localStorage.getItem('character')),
-						characterCount: JSON.parse(localStorage.getItem('character')).length
-					})
-				}
+				const schema = "character";
+				
+				if (localStorage.getItem('character')) return setStore({ character: JSON.parse(localStorage.getItem('character')) });
+
+				const response = await fetch(process.env.BACKEND_URL + "api/character");
+				const data = await response.json();
+				console.log("data : ", data[schema + "s"])
+				if(!data.characters.length > 0) return console.warn("Error in retrieved characters data!");
+
+				localStorage.setItem('character', JSON.stringify(data.characters));
+				setStore({character: JSON.parse(localStorage.getItem('character'))});
 			},
 			getAllLocation: async () => {
-				if (!localStorage.getItem('location')) {
-					const response = await fetch(getStore().nextLocationUrl);
-					const data = await response.json();
-					localStorage.setItem('location', JSON.stringify(data.results));
-					setStore({location: JSON.parse(localStorage.getItem('location')), nextLocationUrl: data.info.next});
-				} else {
-					setStore({
-						location: JSON.parse(localStorage.getItem('location')),
-						locationCount: JSON.parse(localStorage.getItem('location')).length
-					})
-				}
+				if (localStorage.getItem('location')) return setStore({ location: JSON.parse(localStorage.getItem('location')) })
+				
+				const response = await fetch(process.env.BACKEND_URL + "api/location");
+				const data = await response.json();
+				
+				if(!data.locations.length > 0) return console.warn("Error in retrieved locations data!");
+
+				localStorage.setItem('location', JSON.stringify(data.locations));
+				setStore({location: JSON.parse(localStorage.getItem('location'))});
 			},
 			getAllEpisode: async () => {
-				if (!localStorage.getItem('episode')) {
-					const response = await fetch(getStore().nextEpisodeUrl);
-					const data = await response.json();
-					localStorage.setItem('episode', JSON.stringify(data.results));
-					setStore({episode: JSON.parse(localStorage.getItem('episode')), nextEpisodeUrl: data.info.next});
-				} else {
-					setStore({
-						episode: JSON.parse(localStorage.getItem('episode')),
-						episodeCount: JSON.parse(localStorage.getItem('episode')).length
-					})
-				}
+				if (!localStorage.getItem('episode')) setStore({ episode: JSON.parse(localStorage.getItem('episode')) })
+				
+				const response = await fetch(process.env.BACKEND_URL + "api/episode");
+				const data = await response.json();
+				
+				if(!data.episodes.length > 0) return console.warn("Error in retrieved episodes data");
+
+				localStorage.setItem('episode', JSON.stringify(data.results));
+				setStore({episode: JSON.parse(localStorage.getItem('episode'))});
 			},
 			getAllFavorites: () => {
 				if(localStorage.getItem('favorites')) {

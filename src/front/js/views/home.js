@@ -15,9 +15,11 @@ export const Home = () => {
 	return(
 		<div className="container">
 			<div className="row d-flex"> 
-				{store.dataFiltered.map((element)=>{
+				{store.dataFiltered.length > 0
+				?store.dataFiltered.map((element)=>{
 					return <Card key={element.id} data={element}/>
-				})}
+				})
+				:<h3>Loading data... or not!</h3>}
 			</div>
 		</div>
 	)
