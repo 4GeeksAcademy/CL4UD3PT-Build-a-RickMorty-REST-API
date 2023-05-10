@@ -22,13 +22,13 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			state.actions.getAllData('character', 'characters');
-			state.actions.getAllData('location', 'locations');
-			state.actions.getAllData('episode', 'episodes');
+			// state.actions.getAllData('character', 'characters');
+			// state.actions.getAllData('location', 'locations');
+			// state.actions.getAllData('episode', 'episodes');
 
-			// state.actions.getAllCharacter();
-			// state.actions.getAllLocation();
-			// state.actions.getAllEpisode();
+			state.actions.getAllCharacter();
+			state.actions.getAllLocation();
+			state.actions.getAllEpisode();
 			// state.actions.getAllFavorites();
 		}, []);
 

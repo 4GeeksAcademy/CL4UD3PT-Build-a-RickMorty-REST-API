@@ -98,7 +98,7 @@ def get_one_location(location_id):
             jsonify({"Error": "Not able to find location with the provided id."}),
             400,
         )
-    return jsonify({"Location": location.serialize()}), 200
+    return jsonify(location.serialize()), 200
 
 
 @api.route("/location", methods=["POST"])
@@ -130,7 +130,7 @@ def get_one_episode(episode_id):
             jsonify({"Error": "Not able to find episode with the provided id."}),
             400,
         )
-    return jsonify({"Episode": episode.serialize()}), 200
+    return jsonify(episode.serialize()), 200
 
 
 @api.route("/episode", methods=["POST"])

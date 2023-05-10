@@ -17,10 +17,9 @@ export const Single = () => {
 	}, [item])
 
 	const getSingleData = async () => {
-		const response = await fetch(process.env.BACKEND_URL + "api/" + params.thetype + "/" + params.theid);
+		const response = await fetch(process.env.BACKEND_URL + "api/" + params.dataType + "/" + params.dataId);
 		const data = await response.json();
 		setItem(data);
-		console.log(data)
 	}
 	return (
 		<div className="container pb-5">
@@ -32,9 +31,10 @@ export const Single = () => {
 							</div>
 							: null}
 					<div className={` col-12 ${item.image ? " col-md-7 col-lg-8" : null }`}>
-						<h4 className="card-header">{item.name}</h4>
+						<h4 className="card-header">{item.name?item.name:"no name"}</h4>
 						<div className="card-body">
 							{Object.keys(item).map((itemKey, index)=>{
+								console.log(item);
 								if(typeof item[itemKey] != "object" && itemKey != "id" && itemKey != "name" && itemKey != "image" && itemKey != "url"){
 									return <p key={index} className="card-text mb-2"><strong>{itemKey}:</strong> {item[itemKey]}</p>
 								}
