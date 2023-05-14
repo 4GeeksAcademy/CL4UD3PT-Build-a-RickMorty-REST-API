@@ -7,7 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			APIUrl: process.env.BACKEND_URL,
 			favorites: [],
 			dataFiltered: [],
-			schema: ''
+			schema: '',
+			userId: 1
 		},
 		actions: {
 			// getAllData: async (dataType, requestReturnedKey) => {
@@ -46,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({location: JSON.parse(localStorage.getItem('location'))});
 			},
 			getAllEpisode: async () => {
-				if (!localStorage.getItem('episode')) setStore({ episode: JSON.parse(localStorage.getItem('episode')) })
+				if (localStorage.getItem('episode')) setStore({ episode: JSON.parse(localStorage.getItem('episode')) })
 				
 				const response = await fetch(process.env.BACKEND_URL + "api/episode");
 				const data = await response.json();
@@ -63,12 +64,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 					localStorage.setItem('favorites', JSON.stringify([]));
 				}
 			},
-			setFavorites: (newFav) => {
-				const favorites = getStore().favorites;
-				if(!favorites.includes(newFav)){
-					setStore({favorites: [...favorites, newFav]});
-				}else{
-					setStore({favorites: favorites.filter((oldFav) => oldFav != newFav)})
+			setFavorites: async (favoriteId) => {
+				const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + getStore().schema + "/" + favoriteId,{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"user_id": getStore().userId
+					})
+				});
+				if(response.ok){
+					const data = await response.json();
+					console.log(data);
+				}
+				if(response.status === 400){
+					const data = await response.json();
+					console.error(response.status, data);
+					getActions().deleteFavorite(favoriteId);
+				}
+
+				// const favorites = getStore().favorites;
+				// if(!favorites.includes(newFav)){
+				// 	setStore({favorites: [...favorites, newFav]});
+				// }else{
+				// 	setStore({favorites: favorites.filter((oldFav) => oldFav != newFav)})
+				// }
+			},
+			deleteFavorite: async (favoriteId) => {
+				const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + getStore().schema + "/" + favoriteId, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"user_id": getStore().userId
+					})
+				});
+				if(response.ok){
+					const data = await response.json();
+					console.log(data);
 				}
 			},
 			setDataFiltered: (data) => {

@@ -20,7 +20,7 @@ class User(db.Model):
 
 class Character(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(120), unique=False, nullable=False)
     image = db.Column(db.String(250), unique=False, nullable=True)
     gender = db.Column(db.String(80), unique=False, nullable=True)
     status = db.Column(db.String(80), unique=False, nullable=True)
