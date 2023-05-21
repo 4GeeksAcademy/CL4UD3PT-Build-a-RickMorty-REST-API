@@ -1,3 +1,72 @@
+<!--hide-->
+# <img height="50px" src="src/front/img/get-schwifty.png"/> Rick & Morty BlogWars Reading List
+<!--endhide-->
+
+<p align="center">
+  <img height="500px" src="./src/front/img/rick-morty-blogwars-anim.gif?raw=true" />
+</p>
+
+## 📝 Purpose
+
+Create a full-stack webapp with React and Flask that lists the Characters, Locations and Episodes schemas provided by the Rick & Morty API.
+
+# 👨‍💻 Frontend
+1. Need to have 2 views:
+	- home.js to list all data (Characters, Locations or Episodes)
+	- single.js to show more info from individual
+
+2. Read Later or Favorites functionality
+	- Implement a "Read Later" functionality, i.e, a button that allows the user to "save" the item (character, location or episode) into a special list. This list will be shown at the top of the home page, it resembles the main list but only shows the "saved" elements.
+
+# ⚙️ Backend
+Create an API that connects to a database and implements the following Endpoints:
+
+[GET] /character Get a list of all the characters in the database
+[GET] /character/<int:character_id> Get a one single character information
+[GET] /location Get a list of all the locations in the database
+[GET] /location/<int:location_id> Get one single location information
+[GET] /episode Get a list of all the episodes in the database
+[GET] /episode/<int:location_id> Get one single episodes information
+
+Additionally create the following endpoints to allow your Rick&Morty BlogWars to have users and favorites:
+[GET] /users Get a list of all the blog post users (not implemented in frontend)
+[GET] /favorites Get all the favorites that belong to the current user. (user id is passed in request body)
+[POST] /favorite/character/<int:character_id> Add a new favorite character to the current user with the character id = character_id.
+[POST] /favorite/location/<int:location_id> Add new favorite location to the current user with the location id = location_id.
+[POST] /favorite/episode/<int:episode_id> Add new favorite episode to the current user with the episode id = episode_id.
+[DELETE] /favorite/character/<int:character_id> Delete favorite character with the id = character_id.
+[DELETE] /favorite/location/<int:location_id> Delete favorite location with the id = location_id.
+[DELETE] /favorite/episode/<int:episode_id> Delete favorite episode with the id = episode_id.
+
+Your current API does not have an authentication system (yet), which is why the only way to create users is directly on the database using the flask admin.
+
+# 📖 Fundamentals
+This exercise will make you practice the following fundamentals:
+
+Building an RESTful API using one of the most popular libraries Python Flask or Express.js.
+Building a database with the ORM called SQLAlchemy or TypeORM
+Database Migrations using migration system Alembic or the native migration system from TypeORM.
+
+# 🔥 Bonus
+- Option in search bar to not show the suggestions
+- Characters, Locations, Episodes and Favorites are saved in sessionStorage
+
+# Later Addons
+- User authentication
+- Ability to manage Characters, Locations and Episodes in frontend (Add, Edit, Delete)
+
+# 👨‍💻 Technologies
+- HTML
+- CSS
+- Bootstrap
+- React
+- Flux
+- Flask sqlalchemy
+
+# 👥 Contributors
+This and many other projects are built by students as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
+
+
 # WebApp boilerplate with React JS and Flask API
 
 Build web applications using React.js for the front end and python/flask for your backend API.
