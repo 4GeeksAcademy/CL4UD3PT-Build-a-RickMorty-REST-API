@@ -6,7 +6,7 @@
   <img height="500px" src="./src/front/img/rick-morty-blogwars-anim.gif?raw=true" />
 </p>
 
-## 📝 Purpose
+# 📝 Purpose
 
 Create a full-stack webapp with React and Flask that lists the Characters, Locations and Episodes schemas provided by the Rick & Morty API.
 
