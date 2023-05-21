@@ -21,22 +21,24 @@ Create a full-stack webapp with React and Flask that lists the Characters, Locat
 # ⚙️ Backend
 Create an API that connects to a database and implements the following Endpoints:
 
-[GET] /character Get a list of all the characters in the database
-[GET] /character/<int:character_id> Get a one single character information
-[GET] /location Get a list of all the locations in the database
-[GET] /location/<int:location_id> Get one single location information
-[GET] /episode Get a list of all the episodes in the database
-[GET] /episode/<int:location_id> Get one single episodes information
+- `[GET] /character` Get a list of all the characters in the database
+- `[GET] /character/<int:character_id>` Get a one single character information
+- `[GET] /location` Get a list of all the locations in the database
+- `[GET] /location/<int:location_id>` Get one single location information
+- `[GET] /episode` Get a list of all the episodes in the database
+- `[GET] /episode/<int:location_id>` Get one single episodes information
 
 Additionally create the following endpoints to allow your Rick&Morty BlogWars to have users and favorites:
-[GET] /users Get a list of all the blog post users (not implemented in frontend)
-[GET] /favorites Get all the favorites that belong to the current user. (user id is passed in request body)
-[POST] /favorite/character/<int:character_id> Add a new favorite character to the current user with the character id = character_id.
-[POST] /favorite/location/<int:location_id> Add new favorite location to the current user with the location id = location_id.
-[POST] /favorite/episode/<int:episode_id> Add new favorite episode to the current user with the episode id = episode_id.
-[DELETE] /favorite/character/<int:character_id> Delete favorite character with the id = character_id.
-[DELETE] /favorite/location/<int:location_id> Delete favorite location with the id = location_id.
-[DELETE] /favorite/episode/<int:episode_id> Delete favorite episode with the id = episode_id.
+
+- `[GET] /users` Get a list of all the blog post users (not implemented in frontend)
+
+- `[GET] /favorites` Get all the favorites that belong to the current user. (user id is passed in request body)
+- `[POST] /favorite/character/<int:character_id>` Add a new favorite character to the current user with the character id = character_id.
+- `[POST] /favorite/location/<int:location_id>` Add new favorite location to the current user with the location id = location_id.
+- `[POST] /favorite/episode/<int:episode_id>` Add new favorite episode to the current user with the episode id = episode_id.
+- `[DELETE] /favorite/character/<int:character_id>` Delete favorite character with the id = character_id.
+- `[DELETE] /favorite/location/<int:location_id>` Delete favorite location with the id = location_id.
+- `[DELETE] /favorite/episode/<int:episode_id>` Delete favorite episode with the id = episode_id.
 
 Your current API does not have an authentication system (yet), which is why the only way to create users is directly on the database using the flask admin.
 
