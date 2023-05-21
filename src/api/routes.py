@@ -238,6 +238,8 @@ def create_new_episode_favorite(episode_id):
 @api.route("/favorite/<int:fav_id>", methods=["DELETE"])
 def delete_favorite(fav_id):
     favorite = Favorite.query.get(fav_id)
+    print("##################################################")
+    print(fav_id)
 
     if not favorite:
         return jsonify({"Error": "No favorite found with this id"}), 400
@@ -246,8 +248,9 @@ def delete_favorite(fav_id):
 
     body = request.json
     favorites = Favorite.query.filter_by(user_id=body["user_id"]).all()
+
     if len(favorites) == 0:
-        return jsonify({"Favorites": "No favorites for that user"}), 400
+        return jsonify({"Favorites": "No favorites for that user"}), 204
     return jsonify({"favorites": [favorite.serialize() for favorite in favorites]}), 200
 
 

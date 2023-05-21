@@ -60,8 +60,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				const response = await fetch(process.env.BACKEND_URL + "api/favorites/" + getStore().userId);
 				const data = await response.json();
-				console.log("@@@@@@@@@@@@@@@@@", data.favorites)
-				if(!data.favorites.length > 0) return console.warn("Error in retrieved favorites data");
+
+				console.log("no favorites", data)
+
+				if(!data.favorites || !data.favorites.length > 0) return console.warn("Error in retrieved favorites data");
 
 				sessionStorage.setItem('favorite', JSON.stringify(data.favorites));
 				setStore({favorite: JSON.parse(sessionStorage.getItem('favorite'))});
@@ -72,10 +74,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// 	sessionStorage.setItem('favorites', JSON.stringify([]));
 				// }
 			},
-			setFavorites: async (elementId, schema = getStore().schema) => {
-				console.log(elementId, schema);
+			setFavorite: async (elementId, schema = getStore().schema, favoriteId = null) => {
+				console.log(elementId, schema, favoriteId);
 
 				const favorites = getStore().favorite;
+				// CREATE NEW FAVORITE IN BACKEND AND UPDATES FRONTEND
 				if(!favorites.some(fav => fav.element_id === elementId && fav.type === schema)){
 					console.log("new favorite to fetch", schema, elementId)
 					const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + schema + "/" + elementId,{
@@ -88,16 +91,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 						})
 					});
 					if(response.ok){
-						console.log("response:", response)
+						console.log("console status: ", response.status);
 						const data = await response.json();
-						getActions().updateFavoritesButton(data);
+						
+						const favorites = JSON.parse(sessionStorage.getItem('favorite')) === null ? [] : JSON.parse(sessionStorage.getItem('favorite'));
+						console.log("const favorites: ", favorites)
+						favorites.push(data.favorite);
+						
+						sessionStorage.setItem('favorite', JSON.stringify(favorites));
+						setStore({favorite: JSON.parse(sessionStorage.getItem('favorite'))});
+						// getActions().updateFavoritesButton(data);
 					}
 					// We can delete the favorite here if we don't check it in the initial condition
 					if(response.status === 400){
+						console.log("console status: ", response.status);
 						const data = await response.json();
 						console.error(response.status, data);
 					}
-				}else{
+				}else{ // DELETE FAVORITE IN BACKEND AND UPDATES FRONTEND
+					console.log("######## DELETE #########");
 					const favoriteToDelete = favorites.filter((fav) => fav.element_id === elementId && fav.type === schema);
 					const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + favoriteToDelete[0].id, {
 						method: "DELETE",
@@ -108,41 +120,53 @@ const getState = ({ getStore, getActions, setStore }) => {
 							"user_id": getStore().userId
 						})
 					});
-					if(response.ok){
+					if(response.status === 200){
 						const data = await response.json();
-						console.log(data);
-						
 						sessionStorage.setItem('favorite', JSON.stringify(data.favorites));
 						setStore({favorite: JSON.parse(sessionStorage.getItem('favorite'))});
+						// getActions().updateFavoritesButton(data.favorites);
 					}
-					if(response.status === 400){
-						const data = await response.json();
-						console.error(response.status, data);
+					if(response.status === 204){
+						sessionStorage.removeItem('favorite');
+						setStore({favorite: []});
+						return Promise.resolve({});
 					}
 				}
 			},
 			updateFavoritesButton: async (data) => {
-				console.log("### updateFavoritesButton ###", data.favorite);
+				console.log("### updateFavoritesButton ###", data);
+
 				const favorites = JSON.parse(sessionStorage.getItem('favorite'));
-				favorites.push(data.favorite);
-				console.log("### favorite ###", data.favorite);
+				favorites.push(data);
+				
+				console.log("### favorite ###", favorites);
+				
 				sessionStorage.setItem('favorite', JSON.stringify(favorites));
 				setStore({favorite: JSON.parse(sessionStorage.getItem('favorite'))});
 			},
-			// deleteFavorite: async (favoriteId) => {
-			// 	const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + getStore().schema + "/" + favoriteId, {
-			// 		method: "DELETE",
-			// 		headers: {
-			// 			"Content-Type": "application/json"
-			// 		},
-			// 		body: JSON.stringify({
-			// 			"user_id": getStore().userId
-			// 		})
-			// 	});
-			// 	if(response.ok){
-			// 		const data = await response.json();
-			// 		console.log(data);
-			// 	}
+			deleteFavoriteFromNavbar: async (favoriteId) => {
+				console.log("Navbar favorite to delete: ", favoriteId);
+
+				const response = await fetch(process.env.BACKEND_URL + "api/favorite/" + favoriteId, {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						"user_id": getStore().userId
+					})
+				});
+				if(response.status === 200){
+					const data = await response.json();
+					console.log(data);
+					sessionStorage.setItem('favorite', JSON.stringify(data.favorites));
+					setStore({favorite: JSON.parse(sessionStorage.getItem('favorite'))});
+				}
+				if(response.status === 204){
+					sessionStorage.removeItem('favorite');
+					setStore({favorite: []});
+					return Promise.resolve({});
+				}
 			// },
 			// handleFavoritesData: async(favorites) => {
 			// 	favorites.forEach(element => {
@@ -151,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// 		if(element.type === 'episode') episodes.push(element);				
 			// 	});
 			// 	console.log(characters);
-			// },
+			},
 			setDataFiltered: (data) => {
 				setStore({dataFiltered: data});
 			},

@@ -83,7 +83,7 @@ export const Navbar = () => {
 									?<>{store.favorite.map((fav)=>{
 										return <li key={fav.id} className="dropdown-item px-1 d-flex justify-content-between align-items-center" >{fav.name}
 										<button className="btn btn-warning ms-2 badge"
-											onClick={()=>{actions.setFavorites(fav.id, fav.type)}}>X</button>
+											onClick={()=>{actions.deleteFavoriteFromNavbar(fav.id)}}>X</button>
 										</li>
 									})}</>
 									: <li className="dropdown-item">Add a favorite</li>

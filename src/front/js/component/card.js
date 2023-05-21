@@ -17,7 +17,7 @@ export const Card = ({data}) => {
                     ?<>
                     <p className="card-text"><strong>Gender:</strong> {data.gender}</p>
                     <p className="card-text"><strong>Status:</strong> {data.status}</p>
-                    <p className="card-text"><strong>Species:</strong> {data.species}</p>
+                    <p className="card-text"><strong>Specie:</strong> {data.specie}</p>
                     </>: null}
 
                     {/* Locations */}
@@ -40,7 +40,7 @@ export const Card = ({data}) => {
                 <div className="card-footer d-flex justify-content-between align-items-center">
                     {/* FAV BUTTON */}
                     <button className={`btn fav-btn fs-4 ${store.favorite.some(fav => fav.name === data.name)?"text-danger" : "text-secondary"}`}
-                        onClick={()=>{actions.setFavorites(data.id, store.schema);}}>
+                        onClick={()=>{actions.setFavorite(data.id, store.schema);}}>
                         <i className={`${store.favorite.some(fav => fav.name === data.name) ? "fa-solid" : "fa-regular"} fa-heart`}></i>
                     </button>
                     
