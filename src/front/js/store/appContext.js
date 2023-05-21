@@ -22,24 +22,12 @@ const injectContext = PassedComponent => {
 		);
 
 		useEffect(() => {
-			// state.actions.getAllData('character', 'characters');
-			// state.actions.getAllData('location', 'locations');
-			// state.actions.getAllData('episode', 'episodes');
-
 			state.actions.getAllCharacter();
 			state.actions.getAllLocation();
 			state.actions.getAllEpisode();
 			state.actions.getAllFavorites();
 		}, []);
 
-		// updates localStorage favorites every time there's some change on state.store.favorites
-		// useEffect(() => {
-		// 	localStorage.setItem('favorites', JSON.stringify(state.store.favorites));
-		// }, [state.store.favorites])
-
-		// The initial value for the context is not null anymore, but the current state of this component,
-		// the context will now have a getStore, getActions and setStore functions available, because they were declared
-		// on the state of this component
 		return (
 			<Context.Provider value={state}>
 				<PassedComponent {...props} />

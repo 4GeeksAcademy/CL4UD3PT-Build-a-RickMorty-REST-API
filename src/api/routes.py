@@ -61,25 +61,7 @@ def get_one_character(character_id):
             jsonify({"Error": "Not able to find character with the provided id."}),
             400,
         )
-    print(character.serialize())
     return jsonify(character.serialize()), 200
-
-
-@api.route("/characters/<characters_id>", methods=["GET"])
-def get_characters(characters_id):
-    result = characters_id.split(",")
-    print(result)
-    return jsonify("id")
-    # return jsonify(result)
-    # print(type(characters_id))
-    # character = Character.query.get(character_id)
-    # if not character:
-    #     return (
-    #         jsonify({"Error": "Not able to find character with the provided id."}),
-    #         400,
-    #     )
-    # print(character.serialize())
-    # return jsonify(character.serialize()), 200
 
 
 @api.route("/character", methods=["POST"])
@@ -196,7 +178,6 @@ def create_new_character_favorite(character_id):
     new_favorite = Favorite(user_id=body["user_id"], character_id=character_id)
     db.session.add(new_favorite)
     db.session.commit()
-    print(new_favorite.serialize())
     response_body = {"favorite": new_favorite.serialize()}
     return jsonify(response_body), 200
 
@@ -238,8 +219,6 @@ def create_new_episode_favorite(episode_id):
 @api.route("/favorite/<int:fav_id>", methods=["DELETE"])
 def delete_favorite(fav_id):
     favorite = Favorite.query.get(fav_id)
-    print("##################################################")
-    print(fav_id)
 
     if not favorite:
         return jsonify({"Error": "No favorite found with this id"}), 400
@@ -252,40 +231,3 @@ def delete_favorite(fav_id):
     if len(favorites) == 0:
         return jsonify({"Favorites": "No favorites for that user"}), 204
     return jsonify({"favorites": [favorite.serialize() for favorite in favorites]}), 200
-
-
-# @api.route("/favorite/character/<int:character_id>", methods=["DELETE"])
-# def delete_user_favorite_character(character_id):
-#     body = request.json
-#     favorite = Favorite.query.filter_by(
-#         user_id=body["user_id"], character_id=character_id
-#     ).first()
-#     if not favorite:
-#         return jsonify({"Error": "No favorite found with this id"}), 400
-#     db.session.delete(favorite)
-#     db.session.commit()
-#     return jsonify({"Favorite": "User favorite character successfully deleted!"}), 200
-
-
-# @api.route("/favorite/location/<int:location_id>", methods=["DELETE"])
-# def delete_user_favorite_location(location_id):
-#     body = request.json
-#     favorite = Favorite.query.filter_by(
-#         user_id=body["user_id"], location_id=location_id
-#     ).first()
-#     if not favorite:
-#         return jsonify({"Error": "No favorite found with this id"}), 400
-#     db.session.delete(favorite)
-#     db.session.commit()
-#     return jsonify({"Favorite": "User favorite location successfully deleted!"}), 200
-
-
-# @api.route("/user/<int:u_id>/favorite/episode/<int:epi_id>", methods=["DELETE"])
-# def delete_user_favorite_episode(u_id, epi_id):
-#     favorite = Favorite.query.filter_by(
-#         user_id=u_id, episode_id=epi_id).first()
-#     if not favorite:
-#         return jsonify({"Error": "No favorite found with this id"}), 400
-#     db.session.delete(favorite)
-#     db.session.commit()
-#     return jsonify({"Favorite": "User favorite episode successfully deleted!"}), 200
