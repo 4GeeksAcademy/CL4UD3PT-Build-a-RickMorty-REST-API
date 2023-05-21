@@ -39,9 +39,9 @@ export const Card = ({data}) => {
                 {/* Buttons */}
                 <div className="card-footer d-flex justify-content-between align-items-center">
                     {/* FAV BUTTON */}
-                    <button className={`btn fav-btn fs-4 ${store.favorites.includes(data.name)?"text-danger" : "text-secondary"}`}
-                        onClick={()=>{actions.setFavorites(data.id);}}>
-                        <i className={`${store.favorites.includes(data.name) ? "fa-solid" : "fa-regular"} fa-heart`}></i>
+                    <button className={`btn fav-btn fs-4 ${store.favorite.some(fav => fav.name === data.name)?"text-danger" : "text-secondary"}`}
+                        onClick={()=>{actions.setFavorites(data.id, store.schema);}}>
+                        <i className={`${store.favorite.some(fav => fav.name === data.name) ? "fa-solid" : "fa-regular"} fa-heart`}></i>
                     </button>
                     
                     {/* SHOW MORE BUTTON */}

@@ -76,14 +76,14 @@ export const Navbar = () => {
 					{!location.pathname.includes('single')
 						?<div className="btn-group mb-3 mb-lg-0">
 							<button type="button" className="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-								Favorites <span className="badge my-badge text-bg-warning">{store.favorites.length}</span>
+								Favorites <span className="badge my-badge text-bg-warning">{store.favorite.length}</span>
 							</button>
 							<ul className="dropdown-menu dropdown-menu-end">
-								{store.favorites.length > 0
-									?<>{store.favorites.map((fav)=>{
-										return <li key={fav} className="dropdown-item px-1 d-flex justify-content-between align-items-center" >{fav}
+								{store.favorite.length > 0
+									?<>{store.favorite.map((fav)=>{
+										return <li key={fav.id} className="dropdown-item px-1 d-flex justify-content-between align-items-center" >{fav.name}
 										<button className="btn btn-warning ms-2 badge"
-											onClick={()=>{actions.setFavorites(fav)}}>X</button>
+											onClick={()=>{actions.setFavorites(fav.id, fav.type)}}>X</button>
 										</li>
 									})}</>
 									: <li className="dropdown-item">Add a favorite</li>

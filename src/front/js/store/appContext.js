@@ -29,7 +29,7 @@ const injectContext = PassedComponent => {
 			state.actions.getAllCharacter();
 			state.actions.getAllLocation();
 			state.actions.getAllEpisode();
-			// state.actions.getAllFavorites();
+			state.actions.getAllFavorites();
 		}, []);
 
 		// updates localStorage favorites every time there's some change on state.store.favorites

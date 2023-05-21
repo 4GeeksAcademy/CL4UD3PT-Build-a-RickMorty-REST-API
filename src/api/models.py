@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    user = db.relationship("Favorite", backref="user")
+    favorites = db.relationship("Favorite", backref="user")
 
     def __repr__(self):
         return f"<User {self.email}>"
@@ -73,15 +73,32 @@ class Episode(db.Model):
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
-    character_id = db.Column(db.Integer, db.ForeignKey("character.id"), nullable=True)
-    location_id = db.Column(db.Integer, db.ForeignKey("location.id"), nullable=True)
-    episode_id = db.Column(db.Integer, db.ForeignKey("episode.id"), nullable=True)
+    character_id = db.Column(
+        db.Integer, db.ForeignKey("character.id"), nullable=True)
+    location_id = db.Column(
+        db.Integer, db.ForeignKey("location.id"), nullable=True)
+    episode_id = db.Column(
+        db.Integer, db.ForeignKey("episode.id"), nullable=True)
 
     def serialize(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "character_id": self.character_id,
-            "location_id": self.location_id,
-            "episode_id": self.episode_id,
-        }
+        if self.character_id:
+            return {
+                "id": self.id,
+                "type": "character",
+                "name": getattr(self.character_fav, 'name'),
+                "element_id": self.character_id
+            }
+        if self.location_id:
+            return {
+                "id": self.id,
+                "type": "location",
+                "name": getattr(self.location_fav, 'name'),
+                "element_id": self.location_id
+            }
+        if self.episode_id:
+            return {
+                "id": self.id,
+                "type": "episode",
+                "name": getattr(self.episode_fav, 'name'),
+                "element_id": self.episode_id
+            }
